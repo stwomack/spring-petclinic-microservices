@@ -7,7 +7,7 @@ using Steeltoe.Discovery.Client;
 using Steeltoe.Extensions.Configuration.ConfigServer;
 using Steeltoe.Extensions.Logging;
 using Steeltoe.Management.Endpoint;
-
+using Microsoft.Azure.SpringCloud.Client;
 
 namespace steeltoe_petclinic_customers_api
 {
@@ -29,6 +29,7 @@ namespace steeltoe_petclinic_customers_api
                 .AddDynamicLogging()
                 .AddConfigServer(GetLoggerFactory())
                 .AddDiscoveryClient()
+                .UseAzureSpringCloudService()
                 ;
 
         public static ILoggerFactory GetLoggerFactory()
