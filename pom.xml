@@ -20,8 +20,6 @@
         <module>spring-petclinic-customers-service</module>
         <module>spring-petclinic-vets-service</module>
         <module>spring-petclinic-visits-service</module>
-        <module>spring-petclinic-config-server</module>
-        <module>spring-petclinic-discovery-server</module>
         <module>spring-petclinic-api-gateway</module>
     </modules>
 
@@ -30,7 +28,7 @@
         <assertj.version>3.11.1</assertj.version>
 
         <spring-boot.version>2.3.2.RELEASE</spring-boot.version>
-        <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
+        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
 
         <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
 
@@ -68,7 +66,11 @@
                 <version>${assertj.version}</version>
                 <scope>test</scope>
             </dependency>
-
+            <dependency>
+                <groupId>com.microsoft.azure</groupId>
+                <artifactId>spring-cloud-starter-azure-spring-cloud-client</artifactId>
+                <version>${azure-spring-cloud-client.plugin.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
