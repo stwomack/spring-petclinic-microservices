@@ -25,15 +25,7 @@ namespace steeltoe_petclinic_vets_api
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services) {
       //DATA CONTEXT
-      switch (Environment.EnvironmentName) {
-        case ("Development"):
-        case ("Docker"):
-          services.AddDbContext<VetsContext>(options => options.UseInMemoryDatabase("PetClinic_Vets"));
-          break;
-        default:
-          services.AddDbContext<VetsContext>(options => options.UseSqlServer(Configuration));
-          break;
-      };
+      services.AddDbContext<VetsContext>(options => options.UseInMemoryDatabase("PetClinic_Vets"));
 
       //REPOSITORIES
       services.AddScoped<Infrastructure.Repository.IVets, Infrastructure.Repository.Vets>();
@@ -51,17 +43,19 @@ namespace steeltoe_petclinic_vets_api
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger, VetsContext dbContext)
     {
-      switch (Environment.EnvironmentName) {
-        case ("Development"):
-        case ("Docker"):
-          logger.LogInformation($"Running as {Environment.EnvironmentName} environment");
-          app.UseDeveloperExceptionPage();
+      logger.LogInformation($"Running as {Environment.EnvironmentName} environment");
 
-          dbContext.SeedAll();
+      switch (Environment.EnvironmentName.ToLower()) {
+        case ("development"):
+        case ("docker"):
+          app.UseDeveloperExceptionPage();
           break;
         default:
           break;
       };
+
+      dbContext.SeedAll();
+
       //app.UseHttpsRedirection();
 
       app.UseRouting();

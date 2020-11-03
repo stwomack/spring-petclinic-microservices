@@ -43,10 +43,11 @@ namespace steeltoe_petclinic_visits_api
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger, VisitsContext dbContext)
     {
-      switch (Environment.EnvironmentName) {
-        case ("Development"):
-        case ("Docker"):
-          logger.LogInformation($"Running as {Environment.EnvironmentName} environment");
+      logger.LogInformation($"Running as {Environment.EnvironmentName} environment");
+
+      switch (Environment.EnvironmentName.ToLower()) {
+        case ("development"):
+        case ("docker"):
           app.UseDeveloperExceptionPage();
           break;
         default:
