@@ -24,12 +24,12 @@ namespace steeltoe_petclinic_vets_api
                 {
                     webBuilder.UseStartup<Startup>();
                 })
+                .UseAzureSpringCloudService()
                 .UseCloudHosting(5000)
                 .AddAllActuators()
                 .AddDynamicLogging()
                 .AddConfigServer(GetLoggerFactory())
                 .AddDiscoveryClient()
-                .UseAzureSpringCloudService()
                 ;
         public static ILoggerFactory GetLoggerFactory()
         {
