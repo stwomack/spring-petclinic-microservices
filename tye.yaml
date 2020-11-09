@@ -1,0 +1,70 @@
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+# define global settings here
+# name: exampleapp # application name
+# registry: exampleuser # dockerhub username or container registry hostname
+name: steeltoe.incubator.spring.petclinic
+network: spring-petclinic
+
+extensions:
+  - name: zipkin
+
+services:
+  - name: config-server
+    image: springcommunity/spring-petclinic-config-server
+    bindings:
+      - port: 8888
+        containerPort: 8888
+        protocol: http
+
+  - name: discovery-server
+    image: springcommunity/spring-petclinic-discovery-server
+    bindings:
+      - port: 8761
+        containerPort: 8761
+        protocol: http
+
+  - name: admin-server
+    image: springcommunity/spring-petclinic-admin-server
+    bindings:
+      - port: 9090
+        containerPort: 9090
+        protocol: http
+
+  - name: grafana-server
+    dockerFile: docker/grafana/Dockerfile
+    bindings:
+      - port: 3000
+        containerPort: 3000
+
+  - name: prometheus-server
+    dockerFile: docker/prometheus/Dockerfile
+    bindings:
+      - port: 9091
+        containerPort: 9090
+
+  - name: api-gateway
+    image: springcommunity/spring-petclinic-api-gateway
+    bindings:
+      - port: 8080
+        containerPort: 8080
+        protocol: http
+
+  - name: customers-service
+    project: steeltoe-petclinic-customers-service/src/main/steeltoe-petclinic-customers-api.csproj
+    env:
+      - ASPNETCORE_ENVIRONMENT=docker
+
+  - name: visits-service
+    project: steeltoe-petclinic-visits-service/src/main/steeltoe-petclinic-visits-api.csproj
+    env:
+      - ASPNETCORE_ENVIRONMENT=docker
+
+  - name: vets-service
+    project: steeltoe-petclinic-vets-service/src/main/steeltoe-petclinic-vets-api.csproj
+    env:
+      - ASPNETCORE_ENVIRONMENT=docker
