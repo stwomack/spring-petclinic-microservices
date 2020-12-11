@@ -27,7 +27,7 @@ az spring-cloud app deploy --name "spring-admin-server" --jar-path "spring-petcl
 
 echo "Building spring customers service"
 # ./mvnw clean package -pl "spring-petclinic-customers-service" -am
-dotnet publish -c release -o "steeltoe-petclinic-customers-service/target" "steeltoe-petclinic-customers-service/src/main/steeltoe-petclinic-customers-api.csproj"
+dotnet publish -c Release -o "steeltoe-petclinic-customers-service/target" "steeltoe-petclinic-customers-service/src/main/steeltoe-petclinic-customers-api.csproj"
 
 echo "Deploying spring customers service"
 # az spring-cloud app create --name "customers-service" --runtime-version Java_8
