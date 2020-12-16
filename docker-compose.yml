@@ -110,9 +110,9 @@ services:
     ports:
      - 8080:8080
 
-  tracing-server:
+  zipkin:
     image: openzipkin/zipkin
-    container_name: tracing-server
+    container_name: zipkin
     mem_limit: 512M
     environment:
     - JAVA_OPTS=-XX:+UnlockExperimentalVMOptions -Djava.security.egd=file:/dev/./urandom

@@ -5,9 +5,9 @@ using Microsoft.Extensions.Logging;
 using Steeltoe.Common.Hosting;
 using Steeltoe.Discovery.Client;
 using Steeltoe.Extensions.Configuration.ConfigServer;
-using Steeltoe.Extensions.Logging;
+using Steeltoe.Extensions.Configuration.Placeholder;
 using Steeltoe.Management.Endpoint;
-
+using System;
 
 namespace steeltoe_petclinic_customers_api
 {
@@ -24,12 +24,13 @@ namespace steeltoe_petclinic_customers_api
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .UseCloudHosting(5000)
-                .AddAllActuators()
-                .AddDynamicLogging()
-                .AddConfigServer(GetLoggerFactory())
+                .ConfigureAppConfiguration(builder => {
+                    builder.AddPlaceholderResolver();
+                    builder.AddConfigServer(Environment.GetEnvironmentVariable("ENVIRONMENT"), GetLoggerFactory());
+                })
+                .UseCloudHosting(8081)
                 .AddDiscoveryClient()
-                ;
+                .AddAllActuators();
 
         public static ILoggerFactory GetLoggerFactory()
         {
