@@ -24,9 +24,9 @@ namespace Petclinic.Visits.Infrastructure.Repository
             return _dbContext.Visits.Where(q => q.PetId == petId).ToListAsync(cancellationToken);
         }
 
-        public IEnumerable<Visit> FindByPetIdIn(List<int> petIds)
+        public Task<List<Visit>> FindByPetIdIn(IEnumerable<int> petIds)
         {
-            return _dbContext.Visits.Where(q => petIds.Any(a => a == q.PetId));
+            return _dbContext.Visits.Where(q => petIds.Any(a => a == q.PetId)).ToListAsync();
         }
 
         public async Task<Visit> SaveAsync(int petId, Visit visit, CancellationToken cancellationToken = default)

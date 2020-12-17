@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Petclinic.Vets.Domain;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,10 @@ namespace Petclinic.Vets.Infrastructure.Repository
 
         public IEnumerable<VetSpecialty> FindAllByVetId(int vetId)
         {
-            return _dbContext.VetSpecialties.Where(q => q.VetId == vetId);
+            return _dbContext.VetSpecialties
+                        .Include(vs => vs.Specialty)
+                        .Include(vs => vs.Vet)
+                        .Where(q => q.VetId == vetId);
         }
 
         public IEnumerable<VetSpecialty> FindAllBySpecialtyId(int specialtyId)

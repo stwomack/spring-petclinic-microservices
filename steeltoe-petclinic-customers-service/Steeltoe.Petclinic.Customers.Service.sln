@@ -9,6 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Steeltoe.Petclinic.Customer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Steeltoe.Petclinic.Customers.ITest", "Customers.ITest\Steeltoe.Petclinic.Customers.ITest.csproj", "{7F449099-482F-4E62-9B57-60034E413184}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8F7822A2-4AFA-48AA-B59C-7A9B4AD46B29}"
+	ProjectSection(SolutionItems) = preProject
+		..\spring-petclinic-customers-service\src\main\resources\db\mysql\data.sql = ..\spring-petclinic-customers-service\src\main\resources\db\mysql\data.sql
+		..\spring-petclinic-customers-service\src\main\resources\db\mysql\schema.sql = ..\spring-petclinic-customers-service\src\main\resources\db\mysql\schema.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

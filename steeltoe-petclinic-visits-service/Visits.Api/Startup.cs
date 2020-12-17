@@ -28,8 +28,15 @@ namespace Petclinic.Visits
             var optionsAction = new Action<MySqlDbContextOptionsBuilder>(options => options.EnableRetryOnFailure());
             services.AddDbContext<VisitsContext>(options =>
             {
-                // options.UseInMemoryDatabase("PetClinic_Visits");
-                options.UseMySql(Configuration, optionsAction);
+                if (Configuration.GetValue<bool>("UseMySql"))
+                {
+                    options.UseMySql(Configuration, optionsAction);
+                }
+                else
+                {
+                    options.UseInMemoryDatabase("PetClinic_Visits");
+                }
+
                 options.UseLoggerFactory(Program.GetLoggerFactory());
             });
 
@@ -60,7 +67,8 @@ namespace Petclinic.Visits
                     break;
             };
 
-            dbContext.SeedAll();
+            // if using MySql, the tables should be creating using SQL scripts instead of using EF db-first
+            dbContext.SeedAll(ensureCreated: !Configuration.GetValue<bool>("UseMySql"));
 
             app.UseRouting();
 

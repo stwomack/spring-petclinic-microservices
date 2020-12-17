@@ -5,9 +5,15 @@ VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Steeltoe.Petclinic.Vets.Api", "Vets.Api\Steeltoe.Petclinic.Vets.Api.csproj", "{0EC2484B-4692-4BB1-8E36-0AD7C5B7A1DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Steeltoe.Petclinic.Vets.Test", "test\Vets.Test\Steeltoe.Petclinic.Vets.Test.csproj", "{BA5E3872-66A4-43C7-91CC-6E35DA699206}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Steeltoe.Petclinic.Vets.Test", "Vets.Test\Steeltoe.Petclinic.Vets.Test.csproj", "{BA5E3872-66A4-43C7-91CC-6E35DA699206}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Steeltoe.Petclinic.Vets.ITest", "test\Vets.ITest\Steeltoe.Petclinic.Vets.ITest.csproj", "{7F449099-482F-4E62-9B57-60034E413184}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Steeltoe.Petclinic.Vets.ITest", "Vets.ITest\Steeltoe.Petclinic.Vets.ITest.csproj", "{7F449099-482F-4E62-9B57-60034E413184}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{47A0D868-7AB5-4159-A8F4-A5DD5ACFC04F}"
+	ProjectSection(SolutionItems) = preProject
+		..\spring-petclinic-vets-service\src\main\resources\db\mysql\data.sql = ..\spring-petclinic-vets-service\src\main\resources\db\mysql\data.sql
+		..\spring-petclinic-vets-service\src\main\resources\db\mysql\schema.sql = ..\spring-petclinic-vets-service\src\main\resources\db\mysql\schema.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

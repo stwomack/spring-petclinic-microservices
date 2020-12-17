@@ -22,10 +22,22 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Steeltoe.Petclinic.Customers.Test", "steeltoe-petclinic-customers-service\Customers.Test\Steeltoe.Petclinic.Customers.Test.csproj", "{92AD359F-66B3-4C84-9F48-24943EA904EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Customers", "Customers", "{0B9B18F7-F111-4B8B-B9F8-AFB3FBBE1840}"
+	ProjectSection(SolutionItems) = preProject
+		spring-petclinic-customers-service\src\main\resources\db\mysql\data.sql = spring-petclinic-customers-service\src\main\resources\db\mysql\data.sql
+		spring-petclinic-customers-service\src\main\resources\db\mysql\schema.sql = spring-petclinic-customers-service\src\main\resources\db\mysql\schema.sql
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vets", "Vets", "{9C69BA56-C362-4E33-BFA7-62CA4E5C4E3B}"
+	ProjectSection(SolutionItems) = preProject
+		spring-petclinic-vets-service\src\main\resources\db\mysql\data.sql = spring-petclinic-vets-service\src\main\resources\db\mysql\data.sql
+		spring-petclinic-vets-service\src\main\resources\db\mysql\schema.sql = spring-petclinic-vets-service\src\main\resources\db\mysql\schema.sql
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visits", "Visits", "{D324DC24-C88E-4773-A144-4A1A2F646AFF}"
+	ProjectSection(SolutionItems) = preProject
+		spring-petclinic-visits-service\src\main\resources\db\mysql\data.sql = spring-petclinic-visits-service\src\main\resources\db\mysql\data.sql
+		spring-petclinic-visits-service\src\main\resources\db\mysql\schema.sql = spring-petclinic-visits-service\src\main\resources\db\mysql\schema.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

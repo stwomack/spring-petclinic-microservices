@@ -11,5 +11,10 @@ namespace Petclinic.Visits.DTOs
         public DateTime? VisitDate { get; set; }
 
         public string Description { get; set; }
+
+        public override string ToString()
+        {
+            return $"visit request on {VisitDate} with description {Description}";
+        }
     }
 }

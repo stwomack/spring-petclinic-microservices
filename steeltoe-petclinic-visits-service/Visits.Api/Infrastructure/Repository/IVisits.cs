@@ -9,7 +9,7 @@ namespace Petclinic.Visits.Infrastructure.Repository
     {
         Task<List<Visit>> FindByPetIdAsync(int petId, CancellationToken cancellationToken = default);
 
-        IEnumerable<Visit> FindByPetIdIn(List<int> petIds);
+        Task<List<Visit>> FindByPetIdIn(IEnumerable<int> petIds);
 
         Task<Visit> SaveAsync(int petId, Visit visit, CancellationToken cancellationToken = default);
     }

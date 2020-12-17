@@ -45,7 +45,9 @@ namespace Petclinic.Customers.ITest.Controllers
             Assert.NotNull(owners);
             Assert.True(owners.Count() >= Fill.Owners.Count());//POST test could get run before this
             foreach (var owner in owners)
+            {
                 Assert.Equal(Fill.Pets.Where(q => q.OwnerId == owner.Id).Count(), owner.Pets.Count());
+            }
         }
 
         [Fact(DisplayName = "GET owner")]

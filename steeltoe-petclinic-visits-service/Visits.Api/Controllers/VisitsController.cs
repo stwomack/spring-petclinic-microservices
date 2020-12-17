@@ -31,11 +31,14 @@ namespace Petclinic.Visits.Controllers
         [ProducesResponseType(typeof(List<VisitDetails>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<VisitDetails>>> Visits(int petId, CancellationToken cancellationToken)
         {
+            _logger.LogTrace("Get visits for pet with id {petId}", petId);
             var visits = await _visitsRepo.FindByPetIdAsync(petId, cancellationToken);
 
             var ret = new List<VisitDetails>();
             foreach (var visit in visits)
+            {
                 ret.Add(VisitDetails.FromVisit(visit));
+            }
 
             return Ok(ret);
         }
@@ -45,20 +48,24 @@ namespace Petclinic.Visits.Controllers
         public async Task<ActionResult<List<VisitDetails>>> VisitsMultiGet([FromQuery] string petId, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(petId))
+            {
                 return BadRequest();
+            }
 
             string decodedPetId = HttpUtility.UrlDecode(petId);
             _logger.LogInformation("Decoded string as {@DecodedPetId}", decodedPetId);
-            List<int> petIds = petId.Split(',').Select(int.Parse).ToList();
+            var petIds = petId.Split(',').Select(int.Parse);
             _logger.LogInformation("Retrieving information for pets {@PetIds}", petIds);
 
-            var visits = _visitsRepo.FindByPetIdIn(petIds);
+            var visits = await _visitsRepo.FindByPetIdIn(petIds);
 
             _logger.LogInformation("Found {N} visits to return", visits.Count());
 
             var ret = new List<VisitDetails>();
             foreach (var visit in visits)
+            {
                 ret.Add(VisitDetails.FromVisit(visit));
+            }
 
             _logger.LogInformation("Formatted {N} visits with detail", ret.Count());
 
@@ -70,7 +77,7 @@ namespace Petclinic.Visits.Controllers
         [ProducesResponseType((int)HttpStatusCode.Created)]
         public async Task<ActionResult> Create(int petId, [FromBody] VisitRequest visitRequest, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Saving visit {visitRequest}");
+            _logger.LogInformation($"Received {visitRequest}");
 
             var visit = new Visit(petId, visitRequest.VisitDate, visitRequest.Description);
             var newVisit = await _visitsRepo.SaveAsync(petId, visit, cancellationToken);

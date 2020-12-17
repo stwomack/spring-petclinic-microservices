@@ -5,14 +5,17 @@ namespace Petclinic.Customers.Infrastructure
 {
     internal static class SeedData
     {
-        public static async void SeedAll(this CustomersContext dbContext, bool ensureDelete = false, CancellationToken cancellationToken = default)
+        public static async void SeedAll(this CustomersContext dbContext, bool ensureDelete = false, bool ensureCreated = false, CancellationToken cancellationToken = default)
         {
             if (ensureDelete)
             {
                 dbContext.Database.EnsureDeleted();
             }
 
-            dbContext.Database.EnsureCreated();
+            if (ensureCreated)
+            {
+                dbContext.Database.EnsureCreated();
+            }
 
             if (!dbContext.PetTypes.Any())
             {
