@@ -61,9 +61,9 @@ if ($buildDotNet)
 
 if ($deployDotNetApps -or $deployAllApps)
 {
-    ASCDeployDotNet "customers" $false
-    ASCDeployDotNet "vets" $false
-    ASCDeployDotNet "visits" $false
+    ASCDeployDotNet "customers" $true
+    ASCDeployDotNet "vets" $true
+    ASCDeployDotNet "visits" $true
 }
 
 if ($deployJavaApps -or $deployAllApps)

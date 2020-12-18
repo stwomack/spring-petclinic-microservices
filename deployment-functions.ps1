@@ -4,7 +4,7 @@ function PublishDotNetApp
     
     Write-Host "---"
     Write-Host "Building Steeltoe $ServiceName service"
-    dotnet publish -c release -o "steeltoe-petclinic-$ServiceName-service/target" "steeltoe-petclinic-$ServiceName-service/src/main/steeltoe-petclinic-$ServiceName-api.csproj"
+    dotnet publish -c release -o "steeltoe-petclinic-$ServiceName-service/target" "steeltoe-petclinic-$ServiceName-service/$((Get-Culture).TextInfo.ToTitleCase($ServiceName)).Api/Steeltoe.Petclinic.$ServiceName.Api.csproj"
 }
 
 function PublishJavaApp
@@ -30,13 +30,14 @@ function ASCDeployDotNet {
     Write-Host "---"
     ASCWaitForReady "$ServiceName-service"
     Write-Host "Deploying .NET service $ServiceName"
+    $artifactPath = "steeltoe-petclinic-$ServiceName-service/$((Get-Culture).TextInfo.ToTitleCase($ServiceName)).Api/deploy.zip"
     if ($RunInForeground)
     {
-        az spring-cloud app deploy --name $ServiceName-service --runtime-version NetCore_31 --main-entry $ServiceName-service.dll --artifact-path steeltoe-petclinic-$ServiceName-service/src/main/deploy.zip
+        az spring-cloud app deploy --name $ServiceName-service --runtime-version NetCore_31 --main-entry $ServiceName-service.dll --artifact-path $artifactPath
     }
     else
     {
-        Start-Process -FilePath "az" -ArgumentList "spring-cloud app deploy --name $ServiceName-service --runtime-version NetCore_31 --main-entry $ServiceName-service.dll --artifact-path steeltoe-petclinic-$ServiceName-service/src/main/deploy.zip"
+        Start-Process -FilePath "az" -ArgumentList "spring-cloud app deploy --name $ServiceName-service --runtime-version NetCore_31 --main-entry $ServiceName-service.dll --artifact-path $artifactPath"
     }
 }
 

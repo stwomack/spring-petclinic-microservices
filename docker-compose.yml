@@ -19,21 +19,22 @@ services:
      - 8761:8761
 
   #SPRING--------------------------------
-  # customers-service:
-  #   image: springcommunity/spring-petclinic-customers-service
-  #   container_name: customers-service
-  #   mem_limit: 512M
-  #   depends_on:
-  #    - config-server
-  #    - discovery-server
-  #   entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
-  #   ports:
-  #   - 8081:8081
+  #customers-service:
+  #  image: springcommunity/spring-petclinic-customers-service
+  #  container_name: customers-service
+  #  mem_limit: 512M
+  #  depends_on:
+  #   - config-server
+  #   - discovery-server
+  #   - mysql-server
+  #  entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
+  #  ports:
+  #  - 8081:8081
 
   #STEELTOE--------------------------------
   customers-service:
     build:
-      context: ./steeltoe-petclinic-customers-service/src/main
+      context: ./steeltoe-petclinic-customers-service/Customers.Api
       args:
         - EXPOSED_PORT=8081
     container_name: customers-service
@@ -41,26 +42,28 @@ services:
     depends_on:
       - config-server
       - discovery-server
+      - mysql-server
     entrypoint: ["dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","dotnet", "customers-service.dll"]
     ports:
     - 8081:8081
 
   #SPRING--------------------------------
-  # visits-service:
-  #   image: springcommunity/spring-petclinic-visits-service
-  #   container_name: visits-service
-  #   mem_limit: 512M
-  #   depends_on:
-  #    - config-server
-  #    - discovery-server
-  #   entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
-  #   ports:
-  #    - 8082:8082
+  #visits-service:
+  #  image: springcommunity/spring-petclinic-visits-service
+  #  container_name: visits-service
+  #  mem_limit: 512M
+  #  depends_on:
+  #   - config-server
+  #   - discovery-server
+  #   - mysql-server
+  #  entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
+  #  ports:
+  #   - 8082:8082
 
   #STEELTOE--------------------------------
   visits-service:
     build:
-      context: ./steeltoe-petclinic-visits-service/src/main
+      context: ./steeltoe-petclinic-visits-service/Visits.Api
       args:
         - EXPOSED_PORT=8082
     container_name: visits-service
@@ -68,26 +71,28 @@ services:
     depends_on:
       - config-server
       - discovery-server
+      - mysql-server
     entrypoint: ["dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","dotnet", "visits-service.dll"]
     ports:
     - 8082:8082
 
   #SPRING--------------------------------
-  # vets-service:
-  #   image: springcommunity/spring-petclinic-vets-service
-  #   container_name: vets-service
-  #   mem_limit: 512M
-  #   depends_on:
-  #    - config-server
-  #    - discovery-server
-  #   entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
-  #   ports:
-  #    - 8083:8083
+  #vets-service:
+  #  image: springcommunity/spring-petclinic-vets-service
+  #  container_name: vets-service
+  #  mem_limit: 512M
+  #  depends_on:
+  #   - config-server
+  #   - discovery-server
+  #   - mysql-server
+  #  entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
+  #  ports:
+  #   - 8083:8083
 
   #STEELTOE--------------------------------
   vets-service:
     build:
-      context: ./steeltoe-petclinic-vets-service/src/main
+      context: ./steeltoe-petclinic-vets-service/Vets.Api
       args:
         - EXPOSED_PORT=8083
     container_name: vets-service
@@ -95,6 +100,7 @@ services:
     depends_on:
       - config-server
       - discovery-server
+      - mysql-server
     entrypoint: ["dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","dotnet", "vets-service.dll"]
     ports:
     - 8083:8083
@@ -110,9 +116,9 @@ services:
     ports:
      - 8080:8080
 
-  tracing-server:
+  zipkin:
     image: openzipkin/zipkin
-    container_name: tracing-server
+    container_name: zipkin
     mem_limit: 512M
     environment:
     - JAVA_OPTS=-XX:+UnlockExperimentalVMOptions -Djava.security.egd=file:/dev/./urandom
@@ -129,6 +135,14 @@ services:
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
     ports:
      - 9090:9090
+
+  mysql-server:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: petclinic
+      MYSQL_ROOT_PASSWORD: petclinic
+    ports:
+    - 3306:3306
 
   ## Grafana / Prometheus
 

@@ -8,7 +8,6 @@
 # name: exampleapp # application name
 # registry: exampleuser # dockerhub username or container registry hostname
 name: steeltoe.incubator.spring.petclinic
-network: spring-petclinic
 
 extensions:
   - name: zipkin
@@ -27,6 +26,8 @@ services:
       - port: 8761
         containerPort: 8761
         protocol: http
+    env:
+      - SPRING_CLOUD_CONFIG_FAIL_FAST=true
 
   - name: admin-server
     image: springcommunity/spring-petclinic-admin-server
@@ -34,18 +35,22 @@ services:
       - port: 9090
         containerPort: 9090
         protocol: http
+    env:
+      - SPRING_CLOUD_CONFIG_FAIL_FAST=true
 
   - name: grafana-server
     dockerFile: docker/grafana/Dockerfile
     bindings:
       - port: 3000
         containerPort: 3000
+        protocol: http
 
   - name: prometheus-server
     dockerFile: docker/prometheus/Dockerfile
     bindings:
       - port: 9091
         containerPort: 9090
+        protocol: http
 
   - name: api-gateway
     image: springcommunity/spring-petclinic-api-gateway
@@ -53,18 +58,42 @@ services:
       - port: 8080
         containerPort: 8080
         protocol: http
-
-  - name: customers-service
-    project: steeltoe-petclinic-customers-service/src/main/steeltoe-petclinic-customers-api.csproj
     env:
-      - ASPNETCORE_ENVIRONMENT=docker
+      - SPRING_CLOUD_CONFIG_FAIL_FAST=true
+
+  # EF Core Code-First doesn't work well with a shared database
+  # - name: mysql-server
+  #   image:  mysql
+  #   bindings:
+  #     - port: 3306
+  #       containerPort: 3306
+  #   env:
+  #     - MYSQL_DATABASE=petclinic
+  #     - MYSQL_ROOT_PASSWORD=petclinic
+
+  # Tye can currently only run Spring apps in Docker.
+  # We need to ensure that our .NET apps run in Docker (with config relevant to Docker) too so they can be reached easily
+  # Use a custom "ENVIRONMENT" until Tye doesn't overwrite ASPNETCORE_ENVIRONMENT
+  - name: customers-service
+    project: steeltoe-petclinic-customers-service/Customers.Api/Steeltoe.Petclinic.Customers.Api.csproj
+    bindings:
+      - protocol: http
+    env:
+      - ENVIRONMENT=docker
+  #    - UseMySql=true
 
   - name: visits-service
-    project: steeltoe-petclinic-visits-service/src/main/steeltoe-petclinic-visits-api.csproj
+    project: steeltoe-petclinic-visits-service/Visits.Api/Steeltoe.Petclinic.Visits.Api.csproj
+    bindings:
+      - protocol: http
     env:
-      - ASPNETCORE_ENVIRONMENT=docker
+      - ENVIRONMENT=docker
+  #    - UseMySql=true
 
   - name: vets-service
-    project: steeltoe-petclinic-vets-service/src/main/steeltoe-petclinic-vets-api.csproj
+    project: steeltoe-petclinic-vets-service/Vets.Api/Steeltoe.Petclinic.Vets.Api.csproj
+    bindings:
+      - protocol: http
     env:
-      - ASPNETCORE_ENVIRONMENT=docker
+      - ENVIRONMENT=docker
+  #    - UseMySql=true
