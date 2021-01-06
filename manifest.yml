@@ -1,0 +1,49 @@
+---
+dotnetdefaults: &dotnetdefaults
+  buildpacks:
+    - dotnet_core_buildpack
+  memory: 256M
+  random-route: true
+  env:
+    DOTNET_CLI_TELEMETRY_OPTOUT: true
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+    ENVIRONMENT: tas
+  services:
+    - config-server
+    - service-registry
+    #- api-gateway
+
+applications:
+  - name: customers-service
+    path: steeltoe-petclinic-customers-service\Customers.Api
+    <<: *dotnetdefaults
+    #services:
+      #- customers-db
+
+  - name: vets-service
+    path: steeltoe-petclinic-vets-service\Vets.Api
+    <<: *dotnetdefaults
+    #services:
+      #- vets-db
+
+  - name: visits-service
+    path: steeltoe-petclinic-visits-service\Visits.Api
+    <<: *dotnetdefaults
+    #services:
+      #- visits-db
+
+  - name: api-gateway
+    path: spring-petclinic-api-gateway/target/spring-petclinic-api-gateway-2.3.2.jar
+    buildpacks:
+      - java_buildpack_offline
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
+      JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{ enabled: false }'
+      SPRING_PROFILES_ACTIVE: tas
+    random-route: true
+    services:
+      - config-server
+      - service-registry
+  #     #- wavefront

@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.4" />
 
+    <PackageReference Include="Steeltoe.Connector.CloudFoundry" Version="3.0.2" />
     <PackageReference Include="Steeltoe.Connector.EFCore" Version="3.0.2" />
     <PackageReference Include="Steeltoe.Discovery.ClientCore" Version="3.0.2" />
     <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.0.2" />

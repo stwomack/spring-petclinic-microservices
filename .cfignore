@@ -1,0 +1,30 @@
+# User-specific files
+*.suo
+*.user
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio 2015/2017 cache/options directory
+.vs/
+Generated\ Files/
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+
+# Coverlet is a free, cross platform Code Coverage Tool
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# Visual Studio code coverage results
+*.coverage
+*.coveragexml
+# NuGet v3's project.json files produces more ignorable files
+*.nuget.props
+*.nuget.targets
