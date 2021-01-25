@@ -381,3 +381,7 @@ MigrationBackup/
 FodyWeavers.xsd
 *.zip
 .tye/docker_store
+
+.factorypath
+*.jar
+.DS_Store
