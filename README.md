@@ -5,6 +5,8 @@
 This project is a fork of the [microservices version of PetClinic](https://github.com/spring-petclinic/spring-petclinic-microservices), built to demonstrate how Steeltoe and Spring can be used together to build polyglot applications.
 In addition to Spring Cloud Gateway, Spring Cloud Circuit Breaker, Spring Cloud Config, Spring Cloud Sleuth, Resilience4j, Micrometer, and the Eureka Service Discovery from the [Spring Cloud Netflix](https://github.com/spring-cloud/spring-cloud-netflix) technology stack, this fork adds versions of the service applications built with .NET and Steeltoe.
 
+* This branch exists to focus on [Cloud Foundry-based platforms](#run-pet-clinic-on-cloud-foundry)
+
 ## Starting services locally with docker-compose
 
 In order to start entire infrastructure using Docker, images for the components build with Spring must be built by executing `./mvnw clean install -P buildDocker` from a project root. Images for the .NET variants can be built automatically.
@@ -41,6 +43,20 @@ If everything goes well, you can access the following services at given location
 You can tell Config Server to use your local Git repository by using `native` Spring profile and setting
 `GIT_REPO` environment variable, for example:
 `-Dspring.profiles.active=native -DGIT_REPO=/projects/spring-petclinic-microservices-config`
+
+## Run Pet Clinic on Cloud Foundry
+
+This branch was built using Tanzu Application Service (previously Pivotal Cloud Foundry) as the target Cloud Foundry deployment, some adjustments may be needed for other Cloud Foundry distributions, particularly if Spring Cloud Services aren't available in the marketplace. Application manifests and Powershell scripts for performing all of the tasks needed to deploy this sample, assuming a Java SDK and the cf CLI have been installed.
+
+Please review the contents of the scripts before executing! The deployment script will:
+
+* Create (and target) a space named `petclinic`
+* Provision config server and service registry instances
+* Configure the config server to use [the config repo](https://github.com/steeltoeoss-incubator/spring-petclinic-microservices-config)
+* Package the API gateway
+* `cf push` the applications, with bindings to Spring Cloud services
+
+Once the script has completed successfully, access the petclinic by browsing to the API gateway (you should find the route in the output of the command `cf app api-gateway`)
 
 ## Understanding the Spring Petclinic application
 

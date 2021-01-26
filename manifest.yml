@@ -33,7 +33,7 @@ applications:
       #- visits-db
 
   - name: api-gateway
-    path: spring-petclinic-api-gateway/target/spring-petclinic-api-gateway-2.3.2.jar
+    path: spring-petclinic-api-gateway/target/spring-petclinic-api-gateway-2.3.6.jar
     buildpacks:
       - java_buildpack_offline
     health-check-type: http
