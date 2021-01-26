@@ -33,6 +33,7 @@ services:
 
   #STEELTOE--------------------------------
   customers-service:
+    image: springcommunity/steeltoe-customers-service
     build:
       context: ./steeltoe-petclinic-customers-service/Customers.Api
       args:
@@ -62,6 +63,7 @@ services:
 
   #STEELTOE--------------------------------
   visits-service:
+    image: springcommunity/steeltoe-visits-service
     build:
       context: ./steeltoe-petclinic-visits-service/Visits.Api
       args:
@@ -91,6 +93,7 @@ services:
 
   #STEELTOE--------------------------------
   vets-service:
+    image: springcommunity/steeltoe-vets-service
     build:
       context: ./steeltoe-petclinic-vets-service/Vets.Api
       args:

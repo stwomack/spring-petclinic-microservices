@@ -46,7 +46,7 @@ You can tell Config Server to use your local Git repository by using `native` Sp
 
 [See the presentation of the Spring Petclinic Framework version](http://fr.slideshare.net/AntoineRey/spring-framework-petclinic-sample-application)
 
-[A blog bost introducing the Spring Petclinic Microsevices](http://javaetmoi.com/2018/10/architecture-microservices-avec-spring-cloud/) (french language)
+[A blog post introducing the Spring Petclinic Microservices](http://javaetmoi.com/2018/10/architecture-microservices-avec-spring-cloud/) (french language)
 
 You can then access petclinic here: <http://localhost:8080/>
 
@@ -54,7 +54,7 @@ You can then access petclinic here: <http://localhost:8080/>
 
 ## Architecture diagram of the Spring Petclinic Microservices
 
-![Spring Petclinic Microservices architecture](docs/microservices-architecture-diagram.jpg)
+![Spring Petclinic Microservices architecture](docs/revised-architecture-diagram.png)
 
 ## In case you find a bug/suggested improvement for Spring Petclinic Microservices
 

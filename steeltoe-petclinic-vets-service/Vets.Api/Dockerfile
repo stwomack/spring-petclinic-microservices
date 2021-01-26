@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster as builder
 WORKDIR application
-COPY ["steeltoe-petclinic-vets-api.csproj", ""]
+COPY ["Steeltoe.Petclinic.Vets.Api.csproj", ""]
 RUN dotnet restore
 COPY . .
 RUN dotnet publish -c Release -o publish
