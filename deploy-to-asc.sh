@@ -23,7 +23,7 @@ echo "Building admin server"
 
 echo "Deploying spring admin server"
 az spring-cloud app create --name "spring-admin-server" --runtime-version Java_8
-az spring-cloud app deploy --name "spring-admin-server" --jar-path "spring-petclinic-admin-server/target/spring-petclinic-admin-server-2.3.2.jar" --verbose
+az spring-cloud app deploy --name "spring-admin-server" --jar-path "spring-petclinic-admin-server/target/spring-petclinic-admin-server-2.3.6.jar" --verbose
 
 echo "Building spring customers service"
 # ./mvnw clean package -pl "spring-petclinic-customers-service" -am
@@ -31,7 +31,7 @@ dotnet publish -c Release -o "steeltoe-petclinic-customers-service/target" "stee
 
 echo "Deploying spring customers service"
 # az spring-cloud app create --name "customers-service" --runtime-version Java_8
-# az spring-cloud app deploy --name "customers-service" --jar-path "spring-petclinic-customers-service/target/spring-petclinic-customers-service-2.3.2.jar" --verbose
+# az spring-cloud app deploy --name "customers-service" --jar-path "spring-petclinic-customers-service/target/spring-petclinic-customers-service-2.3.6.jar" --verbose
 az spring-cloud app create --name "customers-service" --runtime-version NetCore_31
 az spring-cloud app deploy --name "customers-service" --runtime-version NetCore_31 --main-entry "customers-service.dll" --artifact-path "steeltoe-petclinic-customers-service/Customers.Api/deploy.zip" --verbose
 
@@ -41,7 +41,7 @@ dotnet publish -c release -o "steeltoe-petclinic-vets-service/target" "steeltoe-
 
 echo "Deploying spring vets service"
 # az spring-cloud app create --name "vets-service" --runtime-version Java_8
-# az spring-cloud app deploy --name "vets-service" --jar-path "spring-petclinic-vets-service/target/spring-petclinic-vets-service-2.3.2.jar" --verbose
+# az spring-cloud app deploy --name "vets-service" --jar-path "spring-petclinic-vets-service/target/spring-petclinic-vets-service-2.3.6.jar" --verbose
 az spring-cloud app create --name "vets-service" --runtime-version NetCore_31
 az spring-cloud app deploy --name "vets-service" --runtime-version NetCore_31 --main-entry "vets-service.dll" --artifact-path "steeltoe-petclinic-vets-service/Vets.Api/deploy.zip"
 
@@ -51,7 +51,7 @@ dotnet publish -c release -o "steeltoe-petclinic-visits-service/target" "steelto
 
 echo "Deploying spring visits service"
 # az spring-cloud app create --name "visits-service" --runtime-version Java_8
-# az spring-cloud app deploy --name "visits-service" --jar-path "spring-petclinic-visits-service/target/spring-petclinic-visits-service-2.3.2.jar" --verbose
+# az spring-cloud app deploy --name "visits-service" --jar-path "spring-petclinic-visits-service/target/spring-petclinic-visits-service-2.3.6.jar" --verbose
 az spring-cloud app create --name "visits-service" --runtime-version NetCore_31
 az spring-cloud app deploy --name "visits-service" --runtime-version NetCore_31 --main-entry "visits-service.dll" --artifact-path "steeltoe-petclinic-visits-service/Visits.Api/deploy.zip"
 
@@ -61,4 +61,4 @@ echo "Building api gateway"
 
 echo "Deploying api gateway to default environment"
 az spring-cloud app create --name "spring-api-gateway" --is-public --runtime-version Java_8
-az spring-cloud app deploy --name "spring-api-gateway" --jar-path "spring-petclinic-api-gateway/target/spring-petclinic-api-gateway-2.3.2.jar"
+az spring-cloud app deploy --name "spring-api-gateway" --jar-path "spring-petclinic-api-gateway/target/spring-petclinic-api-gateway-2.3.6.jar"

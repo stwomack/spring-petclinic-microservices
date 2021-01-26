@@ -2,6 +2,7 @@ param (
     [String]$location = "eastus2",
     [String]$rg = "Steeltoe",
     [String]$ASCServiceInstance = "steeltoe",
+    [switch]$complete,
     [switch]$initializeAzureSpringCloud,
     [switch]$buildJava,
     [switch]$buildDotNet,
@@ -18,7 +19,7 @@ $TotalTime.Start()
 # include some helper functions that should make this file easier to read
 . .\deployment-functions.ps1
 
-if ($initializeAzureSpringCloud)
+if ($initializeAzureSpringCloud -or $complete)
 {
     az extension add --name spring-cloud
     az group create --location $location --name $rg
@@ -31,9 +32,9 @@ if ($initializeAzureSpringCloud)
 az configure --defaults group=$rg
 az configure --defaults spring-cloud=$ASCServiceInstance
 
-if ($provisionAppSlots)
+if ($provisionAppSlots -or $complete)
 {
-    ASCCreateApp "spring-admin-server" "Java_8"
+    ASCCreateApp "spring-admin-server" "Java_8" "--is-public"
     # ASCCreateApp "customers-service" "Java_8"
     ASCCreateApp "customers-service" "NetCore_31"
     # ASCCreateApp "vets-service" "Java_8"
@@ -43,7 +44,7 @@ if ($provisionAppSlots)
     ASCCreateApp "spring-api-gateway" "Java_8" "--is-public"
 }
 
-if ($buildJava)
+if ($buildJava -or $complete)
 {
     #PublishJavaApp "customers-service"
     #PublishJavaApp "vets-service"
@@ -52,21 +53,21 @@ if ($buildJava)
     PublishJavaApp "admin-server"
 }
 
-if ($buildDotNet)
+if ($buildDotNet -or $complete)
 {
     PublishDotNetApp "customers"
     PublishDotNetApp "vets"
     PublishDotNetApp "visits"
 }
 
-if ($deployDotNetApps -or $deployAllApps)
+if ($deployDotNetApps -or $deployAllApps -or $complete)
 {
     ASCDeployDotNet "customers" $true
     ASCDeployDotNet "vets" $true
     ASCDeployDotNet "visits" $true
 }
 
-if ($deployJavaApps -or $deployAllApps)
+if ($deployJavaApps -or $deployAllApps -or $complete)
 {
     # ASCDeployJar "customers-service"
     # ASCDeployJar "vets-service"

@@ -5,6 +5,8 @@
 This project is a fork of the [microservices version of PetClinic](https://github.com/spring-petclinic/spring-petclinic-microservices), built to demonstrate how Steeltoe and Spring can be used together to build polyglot applications.
 In addition to Spring Cloud Gateway, Spring Cloud Circuit Breaker, Spring Cloud Config, Spring Cloud Sleuth, Resilience4j, Micrometer, and the Eureka Service Discovery from the [Spring Cloud Netflix](https://github.com/spring-cloud/spring-cloud-netflix) technology stack, this fork adds versions of the service applications built with .NET and Steeltoe.
 
+* This branch exists to focus on [Azure Spring Cloud](#run-pet-clinic-on-azure-spring-cloud)
+
 ## Starting services locally with docker-compose
 
 In order to start entire infrastructure using Docker, images for the components build with Spring must be built by executing `./mvnw clean install -P buildDocker` from a project root. Images for the .NET variants can be built automatically.
@@ -25,7 +27,7 @@ Once images have been built for the Java components, start everything with the c
 
 ## Starting services locally without Docker
 
-Every Java-based microservice is a Spring Boot application and can be started locally using IDE ([Lombok](https://projectlombok.org/) plugin has to be set up) or `../mvnw spring-boot:run` command. Please note that supporting services (Config and Discovery Server) must be started before any other application (Customers, Vets, Visits and API).
+Every Java-based microservice is a Spring Boot application and can be started locally using IDE ([Lombok](https://projectlombok.org/) plugin has to be set up) or `./mvnw spring-boot:run` command. Please note that supporting services (Config and Discovery Server) must be started before any other application (Customers, Vets, Visits and API).
 Startup of Tracing server, Admin server, Grafana and Prometheus is optional.
 If everything goes well, you can access the following services at given location:
 
@@ -41,6 +43,24 @@ If everything goes well, you can access the following services at given location
 You can tell Config Server to use your local Git repository by using `native` Spring profile and setting
 `GIT_REPO` environment variable, for example:
 `-Dspring.profiles.active=native -DGIT_REPO=/projects/spring-petclinic-microservices-config`
+
+## Run Pet Clinic on Azure Spring Cloud
+
+Azure Spring Cloud provides fully managed Eureka, Config Server, and Zipkin-compatible services that require only minimal setup work. We still need to publish/compile and deploy the gateway, services and (optionally) Spring Boot Admin. Scripts are provided in both [bash](./deploy-to-asc.sh) and [Powershell](./deploy-to-asc.ps1) that can allocate a new Azure Spring Cloud instance and perform all of the tasks needed to deploy this sample, assuming .NET and Java SDKs and the Azure CLI have all been installed.
+
+Please review the contents of the scripts before executing! Each of the deployment scripts _can_ do the following but may differ in _how_:
+
+* Ensure Azure Spring-Cloud az cli extension is installed
+* Create a resource group
+* Provision an Azure Spring Cloud Instance
+* Point the built-in Config Server to [the config repo](https://github.com/steeltoeoss-incubator/spring-petclinic-microservices-config)
+* Provision a slot for each application
+  * Admin Server and Api Gateway both use `--is-public` to enable access from outside the private network
+* Compile applications
+* Publish applications
+* Deploy applications
+
+To clean up resources when you're done, the simplest approach is to delete the resource group created by the script.
 
 ## Understanding the Spring Petclinic application
 

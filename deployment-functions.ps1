@@ -48,11 +48,11 @@ function ASCDeployJar {
     ASCWaitForReady "spring-$ServiceName"
     if ($RunInForeground)
     {
-        az spring-cloud app deploy --name "spring-$ServiceName" --jar-path "spring-petclinic-$ServiceName/target/spring-petclinic-$ServiceName-2.3.2.jar" --verbose
+        az spring-cloud app deploy --name "spring-$ServiceName" --jar-path "spring-petclinic-$ServiceName/target/spring-petclinic-$ServiceName-2.3.6.jar" --verbose
     }
     else
     {
-        Start-Process -FilePath "az" -ArgumentList "spring-cloud app deploy --name spring-$ServiceName --jar-path spring-petclinic-$ServiceName/target/spring-petclinic-$ServiceName-2.3.2.jar --verbose"
+        Start-Process -FilePath "az" -ArgumentList "spring-cloud app deploy --name spring-$ServiceName --jar-path spring-petclinic-$ServiceName/target/spring-petclinic-$ServiceName-2.3.6.jar --verbose"
     }
 }
 
