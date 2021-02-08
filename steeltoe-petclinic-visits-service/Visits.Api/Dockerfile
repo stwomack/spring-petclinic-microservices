@@ -22,6 +22,7 @@ ENV PORT ${EXPOSED_PORT}
 EXPOSE ${EXPOSED_PORT}
 
 ENV ASPNETCORE_ENVIRONMENT docker
+ENV ENVIRONMENT docker
 
 COPY --from=builder application/publish .
 ENTRYPOINT ["dotnet", "visits-service.dll"]
