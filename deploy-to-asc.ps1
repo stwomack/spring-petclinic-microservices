@@ -62,9 +62,9 @@ if ($buildDotNet -or $complete)
 
 if ($deployDotNetApps -or $deployAllApps -or $complete)
 {
-    ASCDeployDotNet "customers" $true
-    ASCDeployDotNet "vets" $true
-    ASCDeployDotNet "visits" $true
+    ASCDeployDotNet "customers" $false
+    ASCDeployDotNet "vets" $false
+    ASCDeployDotNet "visits" $false
 }
 
 if ($deployJavaApps -or $deployAllApps -or $complete)
@@ -76,7 +76,7 @@ if ($deployJavaApps -or $deployAllApps -or $complete)
     ASCDeployJar "admin-server" $false
 
     Write-Host "Deploying api gateway to default environment"
-    ASCDeployJar "api-gateway" $true
+    ASCDeployJar "api-gateway" $false
 }
 
 $TotalTime.Stop()

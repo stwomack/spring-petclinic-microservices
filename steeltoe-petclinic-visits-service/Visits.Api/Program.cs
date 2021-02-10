@@ -21,6 +21,7 @@ namespace Petclinic.Visits
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseAzureSpringCloudService()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
@@ -32,8 +33,7 @@ namespace Petclinic.Visits
                 })
                 .UseCloudHosting(8082)
                 .AddDiscoveryClient()
-                .AddAllActuators()
-                .UseAzureSpringCloudService();
+                .AddAllActuators();
 
         public static ILoggerFactory GetLoggerFactory()
         {
