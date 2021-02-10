@@ -14,29 +14,31 @@ extensions:
 
 services:
   - name: config-server
-    image: springcommunity/spring-petclinic-config-server
+    image: springcommunity/spring-petclinic-config-server:2.3.6
     bindings:
       - port: 8888
         containerPort: 8888
         protocol: http
 
   - name: discovery-server
-    image: springcommunity/spring-petclinic-discovery-server
+    image: springcommunity/spring-petclinic-discovery-server:2.3.6
     bindings:
       - port: 8761
         containerPort: 8761
         protocol: http
     env:
       - SPRING_CLOUD_CONFIG_FAIL_FAST=true
+      - SPRING_PROFILES_ACTIVE=docker
 
   - name: admin-server
-    image: springcommunity/spring-petclinic-admin-server
+    image: springcommunity/spring-petclinic-admin-server:2.3.6
     bindings:
       - port: 9090
         containerPort: 9090
         protocol: http
     env:
       - SPRING_CLOUD_CONFIG_FAIL_FAST=true
+      - SPRING_PROFILES_ACTIVE=docker
 
   - name: grafana-server
     dockerFile: docker/grafana/Dockerfile
@@ -53,13 +55,14 @@ services:
         protocol: http
 
   - name: api-gateway
-    image: springcommunity/spring-petclinic-api-gateway
+    image: springcommunity/spring-petclinic-api-gateway:2.3.6
     bindings:
       - port: 8080
         containerPort: 8080
         protocol: http
     env:
       - SPRING_CLOUD_CONFIG_FAIL_FAST=true
+      - SPRING_PROFILES_ACTIVE=docker
 
   # EF Core Code-First doesn't work well with a shared database
   # - name: mysql-server

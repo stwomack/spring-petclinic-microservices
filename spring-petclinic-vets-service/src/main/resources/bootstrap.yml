@@ -9,4 +9,5 @@ spring:
   profiles: docker
   cloud:
     config:
+      failFast: true
       uri: http://config-server:8888
