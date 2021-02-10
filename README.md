@@ -9,8 +9,8 @@ In addition to Spring Cloud Gateway, Spring Cloud Circuit Breaker, Spring Cloud 
 
 ## Starting services locally with docker-compose
 
-In order to start entire infrastructure using Docker, images for the components build with Spring must be built by executing `./mvnw clean install -P buildDocker` from a project root. Images for the .NET variants can be built automatically.
-Once those images are ready, you can start them with a single command `docker-compose up`. Containers startup order is coordinated with [`dockerize` script](https://github.com/jwilder/dockerize).
+In order to start entire infrastructure using Docker, images for the components build with Spring must be built by executing `./mvnw spring-boot:build-image` from a project root. Images for the .NET variants can be built automatically.
+Once those images are ready, you can start them with a single command `docker-compose up`. Containers are expected to fail and restart until the config server and discovery server are both up and running.
 After starting services it takes a while for API Gateway to be in sync with service registry, so don't be scared of initial Spring Cloud Gateway timeouts.
 You can track services availability using Eureka dashboard available by default at <http://localhost:8761>.
 
@@ -21,7 +21,7 @@ are usually not enough and make the `docker-compose up` painfully slow.*
 
 ## Starting services locally with Project Tye
 
-[Project Tye](https://github.com/dotnet/tye) is a tool from Microsoft that makes developing, testing, and deploying microservices and distributed applications easier. While it understands .NET applications very well, it is not built to run Java applications directly, so all of the non-.NET components in the Pet Clinic need to be run as Docker images. As with the docker-compose approach, you must first build the images by executing `./mvnw clean install -P buildDocker` from the project root.
+[Project Tye](https://github.com/dotnet/tye) is a tool from Microsoft that makes developing, testing, and deploying microservices and distributed applications easier. While it understands .NET applications very well, it is not built to run Java applications directly, so all of the non-.NET components in the Pet Clinic need to be run as Docker images. As with the docker-compose approach, you must first build the images by executing `./mvnw spring-boot:build-image` from the project root.
 
 Once images have been built for the Java components, start everything with the command `tye run --docker`. Use the [Tye dashboard](http://localhost:8000) to track the progress of the components as they start up. It is expected for various components to restart several times until the config server is ready for requests, and it may take some additional time after that before the gateway is able to reach the backing services while it syncs with the service registry.
 

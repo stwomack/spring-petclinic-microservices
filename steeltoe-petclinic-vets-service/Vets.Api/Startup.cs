@@ -27,7 +27,7 @@ namespace Petclinic.Vets
         {
             //DATA CONTEXT
             var optionsAction = new Action<MySqlDbContextOptionsBuilder>(options => options.EnableRetryOnFailure());
-            services.AddDbContext<VetsContext>(options =>
+            services.AddDbContext<VetsContext>((provider, options) =>
             {
                 if (Configuration.GetValue<bool>("UseMySql"))
                 {
@@ -38,7 +38,7 @@ namespace Petclinic.Vets
                     options.UseInMemoryDatabase("PetClinic_Vets");
                 }
 
-                options.UseLoggerFactory(Program.GetLoggerFactory());
+                options.UseLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
             });
 
             //REPOSITORIES

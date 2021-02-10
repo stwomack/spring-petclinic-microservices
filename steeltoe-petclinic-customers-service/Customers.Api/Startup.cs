@@ -25,7 +25,7 @@ namespace Petclinic.Customers
         {
             //DATA CONTEXT
             var optionsAction = new Action<MySqlDbContextOptionsBuilder>(options => options.EnableRetryOnFailure());
-            services.AddDbContext<CustomersContext>(options =>
+            services.AddDbContext<CustomersContext>((provider, options) =>
             {
                 if (Configuration.GetValue<bool>("UseMySql"))
                 {
@@ -36,7 +36,7 @@ namespace Petclinic.Customers
                     options.UseInMemoryDatabase("PetClinic_Customers");
                 }
 
-                options.UseLoggerFactory(Program.GetLoggerFactory());
+                options.UseLoggerFactory(provider.GetRequiredService<ILoggerFactory>());
             });
 
             //REPOSITORIES
