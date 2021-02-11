@@ -1,0 +1,75 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: visits-service
+  name: visits-service
+  namespace: petclinic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: visits-service
+  template:
+    metadata:
+      labels:
+        app: visits-service
+    spec:
+      containers:
+      - image: <ImagePrefix>/steeltoe-visits-service:2.3.6
+        name: visits-service
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 250m
+          limits:
+            memory: 128Mi
+            cpu: 500m
+        livenessProbe:
+          httpGet:
+            port: 8082
+            path: /actuator/health/liveness
+          initialDelaySeconds: 90
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            port: 8082
+            path: /actuator/health/readiness
+          initialDelaySeconds: 15
+        ports:
+        - containerPort: 8082
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: kubernetes
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: visits-service
+  name: visits-service
+  namespace: petclinic  
+spec:
+  ports:
+  - port: 8082
+    targetPort: 8082
+  selector:
+    app: visits-service
+# --- # in case you want direct access to this service from outside the k8s network
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   labels:
+#     app: visits-service
+#   name: visits-service-ext
+#   namespace: petclinic
+# spec:
+#   ports:
+#   - port: 8082
+#     targetPort: 8082
+#   selector:
+#     app: visits-service
+#   type: LoadBalancer
