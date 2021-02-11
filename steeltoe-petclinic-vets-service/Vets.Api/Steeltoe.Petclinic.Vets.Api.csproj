@@ -3,8 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Petclinic.Vets.Api</RootNamespace>
-    <Version>1.0.0</Version>
+    <Version>2.3.6</Version>
     <AssemblyName>vets-service</AssemblyName>
+    <SteeltoeVersion>3.1-4922</SteeltoeVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,14 +13,14 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.4" />
 
-    <PackageReference Include="Steeltoe.Connector.EFCore" Version="3.0.2" />
-    <PackageReference Include="Steeltoe.Discovery.ClientCore" Version="3.0.2" />
-    <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.0.2" />
-    <PackageReference Include="Steeltoe.Extensions.Configuration.ConfigServerCore" Version="3.0.2" />
-    <PackageReference Include="Steeltoe.Extensions.Configuration.PlaceholderCore" Version="3.0.2" />
-    <PackageReference Include="Steeltoe.Management.EndpointCore" Version="3.0.2" />
-    <PackageReference Include="Steeltoe.Management.TracingCore" Version="3.0.2" />
-    <PackageReference Include="Steeltoe.Common.Hosting" Version="3.0.2" />
+    <PackageReference Include="Steeltoe.Connector.EFCore" Version="$(SteeltoeVersion)" />
+    <PackageReference Include="Steeltoe.Discovery.ClientCore" Version="$(SteeltoeVersion)" />
+    <PackageReference Include="Steeltoe.Discovery.Kubernetes" Version="$(SteeltoeVersion)" />
+    <PackageReference Include="Steeltoe.Extensions.Configuration.KubernetesCore" Version="$(SteeltoeVersion)" />
+    <PackageReference Include="Steeltoe.Extensions.Configuration.PlaceholderCore" Version="$(SteeltoeVersion)" />
+    <PackageReference Include="Steeltoe.Management.KubernetesCore" Version="$(SteeltoeVersion)" />
+    <PackageReference Include="Steeltoe.Management.TracingCore" Version="$(SteeltoeVersion)" />
+    <PackageReference Include="Steeltoe.Common.Hosting" Version="$(SteeltoeVersion)" />
 
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="3.1.9" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />

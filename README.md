@@ -42,6 +42,14 @@ You can tell Config Server to use your local Git repository by using `native` Sp
 `GIT_REPO` environment variable, for example:
 `-Dspring.profiles.active=native -DGIT_REPO=/projects/spring-petclinic-microservices-config`
 
+## Run Pet Clinic on Kubernetes
+
+This branch is configured to deploy the Pet Clinic to the `petclinic` namespace in a Kubernetes cluster and use native resources for configuration management and service discovery. A [PowerShell script](./deploy-to-kubernetes.ps1) has been provided that will:
+
+* build images for the application components
+* push images to a remote image repository (if `-imageRegistry` is provided)
+* apply [manifests](./k8s) that will deploy the images.
+
 ## Understanding the Spring Petclinic application
 
 [See the presentation of the Spring Petclinic Framework version](http://fr.slideshare.net/AntoineRey/spring-framework-petclinic-sample-application)

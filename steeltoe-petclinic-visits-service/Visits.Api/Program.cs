@@ -4,10 +4,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Steeltoe.Common.Hosting;
 using Steeltoe.Discovery.Client;
-using Steeltoe.Extensions.Configuration.ConfigServer;
+using Steeltoe.Extensions.Configuration.Kubernetes;
 using Steeltoe.Extensions.Configuration.Placeholder;
 using Steeltoe.Management.Endpoint;
-using System;
+using Steeltoe.Management.Kubernetes;
 
 namespace Petclinic.Visits
 {
@@ -27,11 +27,11 @@ namespace Petclinic.Visits
                 .ConfigureAppConfiguration(builder =>
                 {
                     builder.AddPlaceholderResolver();
-                    builder.AddConfigServer(Environment.GetEnvironmentVariable("ENVIRONMENT"), GetLoggerFactory());
+                    builder.AddKubernetes(null, GetLoggerFactory());
                 })
                 .UseCloudHosting(8082)
                 .AddDiscoveryClient()
-                .AddAllActuators();
+                .AddKubernetesActuators();
 
         public static ILoggerFactory GetLoggerFactory()
         {

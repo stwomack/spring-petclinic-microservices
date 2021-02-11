@@ -11,3 +11,20 @@ spring:
     config:
       failFast: true
       uri: http://config-server:8888
+---
+spring:
+  profiles: kubernetes
+  cloud:
+    config:
+      enabled: false
+    kubernetes:
+      reload:
+        strategy: restart-context
+        enabled: true
+      config:
+        enabled: true
+        name: spring-apps
+management:
+  endpoint:
+    restart:
+      enabled: true

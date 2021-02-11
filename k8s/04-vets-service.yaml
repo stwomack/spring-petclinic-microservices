@@ -1,0 +1,75 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: vets-service
+  name: vets-service
+  namespace: petclinic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vets-service
+  template:
+    metadata:
+      labels:
+        app: vets-service
+    spec:
+      containers:
+      - image: <ImagePrefix>/steeltoe-vets-service:2.3.6
+        name: vets-service
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 250m
+          limits:
+            memory: 128Mi
+            cpu: 500m
+        livenessProbe:
+          httpGet:
+            port: 8083
+            path: /actuator/health/liveness
+          initialDelaySeconds: 90
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            port: 8083
+            path: /actuator/health/readiness
+          initialDelaySeconds: 15
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: kubernetes
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: vets-service
+  name: vets-service
+  namespace: petclinic
+spec:
+  ports:
+  - port: 8083
+    targetPort: 8083
+  selector:
+    app: vets-service
+# --- # in case you want direct access to this service from outside the k8s network
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   labels:
+#     app: vets-service
+#   name: vets-service-ext
+#   namespace: petclinic
+# spec:
+#   ports:
+#   - port: 8083
+#     targetPort: 8083
+#   selector:
+#     app: vets-service
+#   type: LoadBalancer
