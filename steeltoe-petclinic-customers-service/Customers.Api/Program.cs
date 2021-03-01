@@ -26,9 +26,13 @@ namespace Petclinic.Customers
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .ConfigureAppConfiguration(builder =>
+                .ConfigureAppConfiguration((context, builder) =>
                 {
-                    builder.AddPlaceholderResolver();
+                    // Placeholder is not currently compatible with Azure Spring Cloud
+                    if (context.HostingEnvironment.IsDevelopment())
+                    {
+                        builder.AddPlaceholderResolver();
+                    }
                     builder.AddConfigServer(Environment.GetEnvironmentVariable("ENVIRONMENT"), GetLoggerFactory());
                 })
                 .UseCloudHosting(8081)
